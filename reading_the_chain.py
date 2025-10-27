@@ -88,7 +88,7 @@ def get_contract_values(contract, admin_address, owner_address):
 	check on available contract functions and transactions on the block explorer at
 	https://testnet.bscscan.com/address/0xaA7CAaDA823300D18D3c43f65569a47e78220073
 	"""
-	default_admin_role = int.to_bytes(0, 32, byteorder="big")
+	default_admin_role = contract.functions.DEFAULT_ADMIN_ROLE().call()
 
 	# for item in contract.abi:
 	# 	if item["type"] == "function":
@@ -122,13 +122,13 @@ if __name__ == "__main__":
 	assert latest_block > london_hard_fork_block_num, f"Error: the chain never got past the London Hard Fork"
 
 	n = 5
-	# for _ in range(n):
-	# 	block_num = random.randint(1, latest_block)
-	# 	ordered = is_ordered_block(cont_w3, block_num)
-	# 	if ordered:
-	# 		print(f"Block {block_num} is ordered")
-	# 	else:
-	# 		print(f"Block {block_num} is not ordered")
+	for _ in range(n):
+		block_num = random.randint(1, latest_block)
+		ordered = is_ordered_block(cont_w3, block_num)
+		if ordered:
+			print(f"Block {block_num} is ordered")
+		else:
+			print(f"Block {block_num} is not ordered")
 
-	# a, b, c = get_contract_values(contract, admin_address, owner_address)
-	# print(f"onchain_root: {a}\nhas_role: {b}\nprime: {c}")
+	a, b, c = get_contract_values(contract, admin_address, owner_address)
+	print(f"onchain_root: {a}\nhas_role: {b}\nprime: {c}")
